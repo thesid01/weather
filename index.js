@@ -78,7 +78,9 @@ app.post('/cityWeather', function (req, res) {
       })
 });
 
-
-app.listen(3000,function(){
-console.log("Server On");
+app.listen(process.env.PORT||5000,function(){
+  console.log("ON!!!!");
 });
+// app.listen(3000,function(){
+// console.log("Server On");
+// });
