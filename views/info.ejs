@@ -142,13 +142,7 @@
 
   <% if(current==1&&citynot==0){%>
     <div class="card"><hr>
-      <br><span>You Requested Data For: <b><%=city%> , <% if(tme>12){
-        var j=tme;
-        j=j-12;
-        j=j+" pm";
-        %><%}else{
-          j=j+" am"
-        }%> <%=j %></b></span><hr>
+      <br><span>You Requested Data For: <b><%=city%> ,  <%=tme %></b></span><hr>
       <br><span> <b><%=formData.currently.summary %></b></span>
       <br><span style="font-size:2rem;"> <b></b> <%=formData.currently.temperature %>F</span>
       <br><span> <%- include("SVG/cloudy.svg") %></span>

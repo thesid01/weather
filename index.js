@@ -59,6 +59,12 @@ app.post('/cityWeather', function (req, res) {
         dateFormat(now, "isoDate");
         var p=req.body.hour;
         tme=p;
+        if(tme>12){
+          tme=tme-12;
+          tme= tme+ " pm";
+        }else{
+          tme= tme+ " am";
+        }
         if(req.body.hour<9){
           p="0"+p;
         }
@@ -83,6 +89,6 @@ app.post('/cityWeather', function (req, res) {
 });
 
 
-app.listen(process.env.PORT||5000,function(){
-  console.log("ON!!!!");
+app.listen(3000,function(){
+console.log("Server On");
 });
