@@ -140,7 +140,7 @@
   </div>
   <div style="margin-right:15px;"><span class="date" style="color:white;"> </span> <a href="http://forecast.io" id="forio">Powered by Dark Sky</a></div>
 
-  <% if(current==1){%>
+  <% if(current==1&&citynot==0){%>
     <div class="card"><hr>
       <br><span>You Requested Data For: <b><%=city%> , <% if(tme>12){
         var j=tme;
@@ -154,22 +154,24 @@
       <br><span> <%- include("SVG/cloudy.svg") %></span>
       <br><span> <b>Precipitation Intensity:</b> <%=formData.currently.precipIntensity %></span>
       <br><span> <b>Precipitation Probability:</b> <%=formData.currently.precipProbability %></span>
-      <br><span> <b>Apparent Temperature:</b> <%=formData.currently.apparentTemperature %></span>
-      <br><span> <b>Dew Point:</b> <%=formData.currently.dewPoint %></span>
-      <br><span> <b>Humidity:</b> <%=formData.currently.humidity %></span>
-      <br><span> <b>Pressure:</b> <%=formData.currently.pressure %></span>
+      <br><span> <b>Apparent Temperature:</b> <%=formData.currently.apparentTemperature %> F</span>
+      <br><span> <b>Dew Point:</b> <%=formData.currently.dewPoint %> F</span>
+      <br><span> <b>Humidity:</b> <%=formData.currently.humidity*100 %> %</span>
+      <br><span> <b>Pressure:</b> <%=formData.currently.pressure %> mb</span>
       <br><span> <b>Wind Speed:</b> <%=formData.currently.windSpeed %></span>
       <br><span> <b>Wind Gust:</b> <%=formData.currently.windGust %></span>
-      <br><span> <b>Wind Bearing:</b> <%=formData.currently.windBearing %></span>
-      <br><span> <b>Clou dCover:</b> <%=formData.currently.cloudCover %></span>
+      <br><span> <b>Wind Bearing:</b> <%=formData.currently.windBearing %> <sup>o</sup></span>
+      <br><span> <b>Cloud Cover:</b> <%=formData.currently.cloudCover %></span>
       <br><span> <b>UV Index:</b> <%=formData.currently.uvIndex %></span>
-      <br><span> <b>Visibility:</b> <%=formData.currently.visibility %></span>
-      <br><span> <b>Ozone:</b> <%=formData.currently.ozone %></span>
+      <br><span> <b>Visibility:</b> <%=formData.currently.visibility %> mi</span>
+      <br><span> <b>Ozone:</b> <%=formData.currently.ozone %> DU</span>
       <div style="background:white; color: black; margin-top: 15px;width:100%;">
         <span style="font-size:0.75rem"><%var a=new Date()%> %>
         <%=a%></span>
       </div>
     </div>
+  <%} if(citynot==1){%>
+    <div class="card"><hr>city not avilable!!<hr></div>
   <%}%>
 
 
@@ -180,17 +182,17 @@
     <br><span> <%- include("SVG/cloudy.svg") %></span>
     <br><span> <b>Precipitation Intensity:</b> <%=weather.currently.precipIntensity %></span>
     <br><span> <b>Precipitation Probability:</b> <%=weather.currently.precipProbability %></span>
-    <br><span> <b>Apparent Temperature:</b> <%=weather.currently.apparentTemperature %></span>
-    <br><span> <b>Dew Point:</b> <%=weather.currently.dewPoint %></span>
-    <br><span> <b>Humidity:</b> <%=weather.currently.humidity %></span>
-    <br><span> <b>Pressure:</b> <%=weather.currently.pressure %></span>
-    <br><span> <b>Wind Speed:</b> <%=weather.currently.windSpeed %></span>
-    <br><span> <b>Wind Gust:</b> <%=weather.currently.windGust %></span>
-    <br><span> <b>Wind Bearing:</b> <%=weather.currently.windBearing %></span>
-    <br><span> <b>Clou dCover:</b> <%=weather.currently.cloudCover %></span>
+    <br><span> <b>Apparent Temperature:</b> <%=weather.currently.apparentTemperature %> F</span>
+    <br><span> <b>Dew Point:</b> <%=weather.currently.dewPoint %> F</span>
+    <br><span> <b>Humidity:</b> <%=weather.currently.humidity*100 %> %</span>
+    <br><span> <b>Pressure:</b> <%=weather.currently.pressure %> mb</span>
+    <br><span> <b>Wind Speed:</b> <%=weather.currently.windSpeed %> mph</span>
+    <br><span> <b>Wind Gust:</b> <%=weather.currently.windGust %> mph</span>
+    <br><span> <b>Wind Bearing:</b> <%=weather.currently.windBearing %><sup>o</sup></span>
+    <br><span> <b>Cloud Cover:</b> <%=weather.currently.cloudCover %></span>
     <br><span> <b>UV Index:</b> <%=weather.currently.uvIndex %></span>
-    <br><span> <b>Visibility:</b> <%=weather.currently.visibility %></span>
-    <br><span> <b>Ozone:</b> <%=weather.currently.ozone %></span>
+    <br><span> <b>Visibility:</b> <%=weather.currently.visibility %> mi</span>
+    <br><span> <b>Ozone:</b> <%=weather.currently.ozone %> DU</span>
     <div style="background:white; color: black; margin-top: 15px;width:100%;">
       <span style="font-size:0.75rem"><%var a=new Date()%> %>
       <%=a%></span>

@@ -15,6 +15,7 @@ var WeatherData;
 var formData={};
 var marker;
 var tme;
+var cityvail=0;
 
 app.get('/', function (req, res) {
   res.render("index",{weather:WeatherData,name:"siddharth","current":0});
@@ -23,11 +24,12 @@ app.get('/', function (req, res) {
 
 app.get("/info",function(req,res){
   if(Object.keys(formData).length!=0){
-      res.render("info",{weather:WeatherData,name:"praval","current":1,formData:formData,city:marker,tme:tme});
+      res.render("info",{citynot:cityvail,weather:WeatherData,name:"praval","current":1,formData:formData,city:marker,tme:tme});
   }else {
-      res.render("info",{weather:WeatherData,name:"praval","current":0});
+      res.render("info",{citynot:cityvail,weather:WeatherData,name:"praval","current":0});
   }
   formData={};
+  cityvail=0;
 });
 
 app.post('/', function (req, res) {
@@ -74,13 +76,13 @@ app.post('/cityWeather', function (req, res) {
             })
       })
       .catch((error) =>{
-        console.log(error);
+        cityvail=1;
+        res.redirect("/info");
+        // console.log(error);
       })
 });
 
-app.listen(process.env.PORT||5000,function(){
-  console.log("ON!!!!");
+
+app.listen(3000,function(){
+console.log("Server On");
 });
-// app.listen(3000,function(){
-// console.log("Server On");
-// });
