@@ -6,31 +6,14 @@ const axios = require("axios");
 require('dotenv').config();
 
 app.set('view engine', 'ejs');
-app.use(bodyParser.urlencoded({
-    extended: true
-}));
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.json());
 
-var WeatherData;
-var formData={};
-var marker;
-var tme;
-var cityvail=0;
-
-app.get('/', function (req, res) {
-  res.render("index",{weather:WeatherData,name:"siddharth","current":0});
-  WeatherData={};
-});
-
-app.get("/info",function(req,res){
-  if(Object.keys(formData).length!=0){
-      res.render("info",{citynot:cityvail,weather:WeatherData,name:"praval","current":1,formData:formData,city:marker,tme:tme});
-  }else {
-      res.render("info",{citynot:cityvail,weather:WeatherData,name:"praval","current":0});
-  }
-  formData={};
-  cityvail=0;
-});
+app.route("/")
+  .get((req, res,next)=>{
+      res.render("index");
+  });
 
 app.post('/', function (req, res) {
   var now = new Date();
@@ -38,19 +21,18 @@ app.post('/', function (req, res) {
   var url="https://api.darksky.net/forecast/b5c493e7b5be90511f6eb8df4958a1f9/"+req.body.lat+","+req.body.lon+","+now.toISOString().slice(0,-5);
   axios.get(url)
       .then((response) => {
-        WeatherData=response.data;
         console.log(response.data);
-        return res.redirect('/info');
+        res.send(response.data);
       })
       .catch((error) =>{
-        console.log(error);
+        res.redirect("/error");
       })
 });
 
 app.post('/cityWeather', function (req, res) {
   console.log(":::::::::::::::::::::::::::::::::::::::::::::::::");
   let city = req.body.city;
-  marker=city;
+  var marker=city;
   let apiKey = "f2c6d51e3c98b9dfe98ee854024a1257";
   let url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=${apiKey}`;
   axios.get(url)
@@ -59,36 +41,33 @@ app.post('/cityWeather', function (req, res) {
         dateFormat(now, "isoDate");
         var p=req.body.hour;
         tme=p;
-        if(tme>12){
-          tme=tme-12;
-          tme= tme+ " pm";
-        }else{
-          tme= tme+ " am";
-        }
         if(req.body.hour<9){
           p="0"+p;
         }
         var s=now.toISOString().slice(0,-13)+p+":"+"00:00";
-        console.log(s);
         var url="https://api.darksky.net/forecast/b5c493e7b5be90511f6eb8df4958a1f9/"+response.data.coord.lat+","+response.data.coord.lon+","+s;
         axios.get(url)
             .then((response) => {
-              formData=response.data;
               console.log(response.data);
-              return res.redirect('/info');
+              res.send(response.data);
             })
             .catch((error) =>{
               console.log(error);
             })
       })
       .catch((error) =>{
-        cityvail=1;
-        res.redirect("/info");
-        // console.log(error);
-      })
+        res.redirect("/error");
+      });
 });
 
+app.get("/error",(req,res)=>{
+  res.render("error",{error:"true"});
+});
+
+app.get("*",(req,res)=>{
+  res.render("error",{error:"true"});
+});
 
 app.listen(process.env.PORT||5000,function(){
-  console.log("ON!!!!");
+  console.log("Started!!!!");
 });
